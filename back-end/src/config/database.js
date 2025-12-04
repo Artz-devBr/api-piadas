@@ -26,4 +26,15 @@ export async function setupDatabase() {
     `);
    
     console.log('Banco de dados e Tabela Piadas prontos!');
+
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS usuarios (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          email TEXT UNIQUE NOT NULL,
+          senha TEXT NOT NULL
+      );
+    `);
+    
+    console.log('Tabela Usuários criada!');
+
 }
