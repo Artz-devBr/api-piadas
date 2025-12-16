@@ -16,7 +16,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         
         {/* Dica: Podemos criar uma rota para página não encontrada (404) depois */}
-        <Route path="*" element={<h1 className="text-white">Página não encontrada</h1>} />
+        <Route path="*" element={
+          <h1 className="text-white">404 Página não encontrada</h1>
+        } />
 
       </Routes>
     </BrowserRouter>
