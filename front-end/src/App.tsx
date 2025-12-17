@@ -1,3 +1,4 @@
+import React from 'react'; // Adicione esta importação no topo
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -5,18 +6,17 @@ import { Login } from './pages/Login';
 import { AuthProvider, useAuth } from './context/AuthContext'; // <--- Importe o Provider
 import { Admin } from './pages/Admin';
 
-// --- O COMPONENTE PORTEIRO ---
-// Ele recebe um "filho" (a página que você quer acessar)
-function RotaProtegida({ children }: { children: JSX.Element }) {
-  const { isAuthenticated } = useAuth(); // Pergunta pro contexto: "Tá logado?"
+// --- O COMPONENTE PORTEIRO ATUALIZADO ---
+// Usamos React.ReactNode que é o padrão atual
+function RotaProtegida({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated } = useAuth();
   
   if (!isAuthenticated) {
-    // Se NÃO estiver logado, manda pro Login
     return <Navigate to="/login" />;
   }
   
-  // Se estiver logado, deixa passar e mostra a página
-  return children;
+  // Como children pode ser ReactNode, precisamos garantir o retorno como JSX
+  return <>{children}</>;
 }
 
 function App() {
