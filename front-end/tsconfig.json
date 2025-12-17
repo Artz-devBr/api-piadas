@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext", // Mude de "CommonJS" ou similar para "ESNext"
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "moduleResolution": "bundler", // or "node" if using older versions
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "skipLibCheck": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+    "strict": true
   }
 }
