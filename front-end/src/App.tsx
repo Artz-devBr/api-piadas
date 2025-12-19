@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 
+import Snowfall from 'react-snowfall';
+
 import { AuthProvider, useAuth } from './context/AuthContext'; // <--- Importe o Provider
 import { Admin } from './pages/Admin';
 
@@ -23,7 +25,7 @@ function App() {
   return (
     // 1. BrowserRouter: O "Pai" que monitora a URL do navegador
     <BrowserRouter>
-      
+      <Snowfall color="white" />
       <AuthProvider>
         {/* 2. Routes: Uma lista de regras. Ele escolhe APENAS UMA por vez. */}
         <Routes>
