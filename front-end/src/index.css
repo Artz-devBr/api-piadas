@@ -4,5 +4,5 @@
 
 /* Estilo global para o fundo escuro */
 body {
-  @apply bg-slate-900 text-slate-100 antialiased;
+  @apply bg-gray-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 antialiased transition-colors duration-300;
 }

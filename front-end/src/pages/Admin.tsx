@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import type { Piada } from '../types'; // Importando como Type para evitar erro
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export function Admin() {
   // Estado para armazenar a lista de piadas pendentes
