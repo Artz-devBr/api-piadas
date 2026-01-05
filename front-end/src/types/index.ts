@@ -3,6 +3,7 @@ export interface Piada {
   pergunta: string;
   resposta: string;
   aprovada: boolean;
+  autor?: string;
 }
 
 export interface User {

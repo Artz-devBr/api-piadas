@@ -15,6 +15,7 @@ export const registrarUsuario = async (req, res) => {
         
         res.status(201).json(novoUsuario);
     } catch (erro) {
+        console.log(erro)
         res.status(400).json({ erro: 'Erro ao registrar (Email já existe?)' });
     }
 };

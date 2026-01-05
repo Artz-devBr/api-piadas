@@ -7,10 +7,11 @@ import { Link } from 'react-router-dom';
 export function Home() {
   const [piada, setPiada] = useState<Piada | null>(null);
   const [loading, setLoading] = useState(false);
-  
+
   // Estados para o formulário de envio
   const [novaPergunta, setNovaPergunta] = useState('');
   const [novaResposta, setNovaResposta] = useState('');
+  const [novoAutor, setNovoAutor] = useState('');
 
   async function buscarPiada() {
     setLoading(true);
@@ -26,12 +27,13 @@ export function Home() {
 
   async function enviarPiada(e: React.FormEvent) {
     e.preventDefault();
-    if(!novaPergunta || !novaResposta) return;
+    if (!novaPergunta || !novaResposta) return;
     try {
-      await api.post('/piadas', { pergunta: novaPergunta, resposta: novaResposta });
+      await api.post('/piadas', { pergunta: novaPergunta, resposta: novaResposta, autor: novoAutor });
       alert('Piada enviada para moderação!');
       setNovaPergunta('');
       setNovaResposta('');
+      setNovoAutor('');
     } catch (err) {
       alert('Erro ao enviar.');
     }
@@ -52,6 +54,7 @@ export function Home() {
           <div className="space-y-4 text-center">
             <h2 className="text-xl text-slate-300">{piada.pergunta}</h2>
             <p className="text-3xl font-bold text-white animate-pulse">{piada.resposta}</p>
+            {piada.autor && <p className="text-sm text-slate-500 mt-4">Por: {piada.autor}</p>}
           </div>
         ) : (
           <p className="text-center text-slate-500">Nenhuma piada disponível no momento.</p>
@@ -65,13 +68,18 @@ export function Home() {
       {/* Formulário de Envio */}
       <form onSubmit={enviarPiada} className="w-full max-w-2xl bg-slate-800 p-6 rounded-xl border border-slate-700">
         <h3 className="text-lg font-bold mb-4">Envie sua piada:</h3>
-        <input 
-          placeholder="Pergunta" 
+        <input
+          placeholder="Seu nome (opcional)"
+          className="w-full mb-3 p-3 rounded bg-slate-900 border border-slate-600"
+          value={novoAutor} onChange={e => setNovoAutor(e.target.value)}
+        />
+        <input
+          placeholder="Pergunta"
           className="w-full mb-3 p-3 rounded bg-slate-900 border border-slate-600"
           value={novaPergunta} onChange={e => setNovaPergunta(e.target.value)}
         />
-        <input 
-          placeholder="Resposta" 
+        <input
+          placeholder="Resposta"
           className="w-full mb-3 p-3 rounded bg-slate-900 border border-slate-600"
           value={novaResposta} onChange={e => setNovaResposta(e.target.value)}
         />

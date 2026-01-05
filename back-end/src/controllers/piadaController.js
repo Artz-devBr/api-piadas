@@ -1,11 +1,12 @@
 import Piada from '../models/Piada.js'; // Importamos o Model
 
 export const submeterPiada = async (req, res) => {
-    const { pergunta, resposta } = req.body;
+    const { pergunta, resposta, autor } = req.body;
     try {
-        const novaPiada = await Piada.criar(pergunta, resposta);
+        const novaPiada = await Piada.criar(pergunta, resposta, autor);
         res.status(201).json(novaPiada);
     } catch (erro) {
+        console.log(erro)
         res.status(500).json({ erro: 'Erro ao salvar piada' });
     }
 };
@@ -13,11 +14,11 @@ export const submeterPiada = async (req, res) => {
 export const buscarPiadaAleatoria = async (req, res) => {
     try {
         const piada = await Piada.buscarAleatoria();
-        
+
         if (!piada) {
             return res.status(404).json({ mensagem: 'Nenhuma piada encontrada' });
         }
-        
+
         res.json(piada);
     } catch (erro) {
         console.log(erro)
@@ -28,11 +29,11 @@ export const buscarPiadaAleatoria = async (req, res) => {
 export const buscarDezPiadasAleatorias = async (req, res) => {
     try {
         const piada = await Piada.buscarAleatoria();
-        
+
         if (!piada) {
             return res.status(404).json({ mensagem: 'Nenhuma piada encontrada' });
         }
-        
+
         res.json(piada);
     } catch (erro) {
         res.status(500).json({ erro: 'Erro ao buscar piada' });
