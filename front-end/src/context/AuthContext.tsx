@@ -6,15 +6,12 @@ import type { AuthContextType } from '../types'; // Importe o tipo que definimos
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Mágica: Quando a aplicação abre, verifica se JÁ tem token no bolso
-  useEffect(() => {
+  // Inicializa o estado verificando DIRETAMENTE no localStorage
+  // Isso evita que ele comece como 'false' e redirecione antes de checar
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+    return !!token; // Retorna true se tiver token, false se não
+  });
 
   function login(token: string) {
     localStorage.setItem('token', token); // Guarda no bolso
