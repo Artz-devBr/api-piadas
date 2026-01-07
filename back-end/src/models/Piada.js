@@ -1,11 +1,11 @@
 import { query } from '../config/database.js';
 
 class Piada {
-    // Cria uma nova piada (pendente por padrão)
-    static async criar(pergunta, resposta, autor) {
+    // Cria uma nova piada
+    static async criar(pergunta, resposta, autor, aprovada = false, justificativa_ia = null) {
         const resultado = await query(
-            'INSERT INTO piadas (pergunta, resposta, autor, aprovada) VALUES ($1, $2, $3, false) RETURNING *',
-            [pergunta, resposta, autor]
+            'INSERT INTO piadas (pergunta, resposta, autor, aprovada, justificativa_ia) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [pergunta, resposta, autor, aprovada, justificativa_ia]
         );
         return resultado.rows[0];
     }

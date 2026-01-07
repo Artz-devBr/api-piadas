@@ -109,7 +109,7 @@ export function Admin() {
         <div className="mb-12">
           <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 dark:text-white transition-colors">
             <span className="bg-yellow-500 w-2 h-6 rounded-full block"></span>
-            Piadas Pendentes ({pendentes.length})
+            Piadas Reprovadas pela IA ({pendentes.length})
           </h2>
 
           <div className="grid gap-4">
@@ -125,6 +125,14 @@ export function Admin() {
                   <p className="font-semibold text-lg text-gray-800 dark:text-white mb-1 transition-colors">{piada.pergunta}</p>
                   <p className="text-gray-600 dark:text-slate-400 italic transition-colors">"{piada.resposta}"</p>
                   <p className="text-xs text-gray-500 dark:text-slate-500 mt-2 transition-colors">Enviado por: <span className="text-gray-400 dark:text-slate-400">{piada.autor || 'Anônimo'}</span></p>
+
+                  {/* --- JUSTIFICATIVA IA --- */}
+                  {piada.justificativa_ia && (
+                    <div className="mt-3 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-900/30">
+                      <p className="text-xs font-bold text-red-600 dark:text-red-400 mb-1">REPROVADA PELA IA:</p>
+                      <p className="text-sm text-red-700 dark:text-red-300 leading-relaxed">{piada.justificativa_ia}</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-2">
@@ -138,7 +146,7 @@ export function Admin() {
                   <button
                     onClick={() => aprovar(piada.id)}
                     className="bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg hover:shadow-green-900/50 transition-all transform active:scale-95"
-                    title="Aprovar e Publicar"
+                    title="Aprovar e Publicar (Ignorar IA)"
                   >
                     <Check size={24} />
                   </button>

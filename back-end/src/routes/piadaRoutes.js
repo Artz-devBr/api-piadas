@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-    submeterPiada, buscarPiadaAleatoria,
+    criarPiada, buscarPiadaAleatoria,
     listarPiadasPendentes, aprovarPiada,
     buscarDezPiadasAleatorias, deletarPiada
 } from '../controllers/piadaController.js';
@@ -11,8 +11,8 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 const router = Router();
 
 // Rotas Públicas
-// Define que, ao fazer um POST em '/piadas', executa a função 'submeterPiada'
-router.post('/piadas', submeterPiada);
+// Define que, ao fazer um POST em '/piadas', executa a função 'criarPiada'
+router.post('/piadas', criarPiada);
 // Rota nova: GET /piadas
 router.get('/piadas', buscarPiadaAleatoria);
 

@@ -9,6 +9,9 @@ export function Home() {
   const [piada, setPiada] = useState<Piada | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Estados para o feedback da IA
+  const [feedback, setFeedback] = useState<'hidden' | 'visible' | 'fading'>('hidden');
+
   // Estados para o formulário de envio
   const [novaPergunta, setNovaPergunta] = useState('');
   const [novaResposta, setNovaResposta] = useState('');
@@ -30,13 +33,19 @@ export function Home() {
     e.preventDefault();
     if (!novaPergunta || !novaResposta) return;
     try {
+      // Inicia a animação de feedback
+      setFeedback('visible');
+      setTimeout(() => setFeedback('fading'), 3000); // Começa a sumir após 3s
+      setTimeout(() => setFeedback('hidden'), 5000); // Some totalmente após 5s (3s + 2s de fade)
+
       await api.post('/piadas', { pergunta: novaPergunta, resposta: novaResposta, autor: novoAutor });
-      alert('Piada enviada para moderação!');
+
       setNovaPergunta('');
       setNovaResposta('');
       setNovoAutor('');
     } catch (err) {
       alert('Erro ao enviar.');
+      setFeedback('hidden');
     }
   }
 
@@ -70,8 +79,9 @@ export function Home() {
       </div>
 
       {/* Formulário de Envio */}
-      <form onSubmit={enviarPiada} className="w-full max-w-2xl bg-white dark:bg-slate-800 p-6 rounded-xl border border-gray-200 dark:border-slate-700 transition-colors duration-300">
+      <form onSubmit={enviarPiada} className="w-full max-w-2xl bg-white dark:bg-slate-800 p-6 rounded-xl border border-gray-200 dark:border-slate-700 transition-colors duration-300 relative">
         <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors">Envie sua piada:</h3>
+
         <input
           placeholder="Seu nome (opcional)"
           className="w-full mb-3 p-3 rounded bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-colors"
@@ -87,6 +97,14 @@ export function Home() {
           className="w-full mb-3 p-3 rounded bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-colors"
           value={novaResposta} onChange={e => setNovaResposta(e.target.value)}
         />
+
+        {/* Feedback da IA */}
+        {feedback !== 'hidden' && (
+          <div className={`mb-2 text-center font-semibold text-indigo-500 dark:text-indigo-400 transition-opacity duration-[2000ms] ${feedback === 'fading' ? 'opacity-0' : 'opacity-100'}`}>
+            Piada enviada para a IA analisar!
+          </div>
+        )}
+
         <button type="submit" className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-bold flex items-center gap-2">
           <Send size={18} /> Enviar
         </button>

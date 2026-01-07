@@ -4,6 +4,7 @@ export interface Piada {
   resposta: string;
   aprovada: boolean;
   autor?: string;
+  justificativa_ia?: string;
 }
 
 export interface User {
